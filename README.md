@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# bankruptn't 💚
 
-## Getting Started
+> Tu banco digital — simple, seguro y moderno.
 
-First, run the development server:
+## Stack
 
+| Capa | Tecnología |
+|------|------------|
+| Framework | Next.js 14 (App Router) + TypeScript |
+| Estilos | Tailwind CSS |
+| Base de datos | PostgreSQL (Neon) |
+| ORM | Prisma |
+| API | REST (Next.js API Routes) |
+| Auth | JWT + bcrypt + face-api.js |
+
+## Colores
+- **Mint Neon** `#3DF5B0` — primario
+- **Night Blue** `#0F0F1A` — fondo
+
+---
+
+## Setup paso a paso
+
+### 1. Instalar dependencias
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Crear proyecto en Neon
+1. Ve a [console.neon.tech](https://console.neon.tech)
+2. Crea un nuevo proyecto → nombre: `bankruptnt`
+3. Copia la **Connection string** (pooled) y la **Direct URL**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurar variables de entorno
+```bash
+cp .env.local.example .env.local
+# Edita .env.local con tus valores de Neon
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Crear tablas en la base de datos
+```bash
+npm run db:push        # Crea las tablas desde el schema Prisma
+npm run db:seed        # Carga datos de prueba (opcional)
+```
 
-## Learn More
+### 5. Descargar modelos face-api.js
+Ve a: https://github.com/justadudewhohacks/face-api.js/tree/master/weights
 
-To learn more about Next.js, take a look at the following resources:
+Descarga estos archivos a `/public/models/`:
+- `tiny_face_detector_model-weights_manifest.json` + shard
+- `face_landmark_68_model-weights_manifest.json` + shard
+- `face_recognition_model-weights_manifest.json` + shard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 6. Correr en desarrollo
+```bash
+npm run dev
+# → http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## API Routes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | `/api/auth/register` | Registro de usuario |
+| POST | `/api/auth/login` | Login (password o facial) |
+| GET | `/api/account` | Balance + stats + recientes |
+| GET | `/api/transactions` | Historial paginado + filtros |
+| POST | `/api/transactions/send` | Enviar dinero |
+| GET | `/api/user/find?phone=` | Buscar usuario por teléfono |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Credenciales demo (después del seed)
+```
+Teléfono: +573001234567
+Contraseña: demo123
+```
+
+---
+
+## Comandos Prisma útiles
+```bash
+npm run db:generate   # Regenerar Prisma Client
+npm run db:push       # Sincronizar schema → DB (sin migración)
+npm run db:migrate    # Crear migración formal
+npm run db:studio     # Abrir Prisma Studio (UI para la DB)
+```
