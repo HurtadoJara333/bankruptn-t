@@ -1,0 +1,96 @@
+// ─── Generator ───────────────────────────────────────────
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ─── Datasource (Neon PostgreSQL) ────────────────────────
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")   // Neon requiere directUrl para migraciones
+}
+
+// ─── Enums ────────────────────────────────────────────────
+enum AuthMethod {
+  PASSWORD
+  FACE
+  BOTH
+}
+
+enum TransactionType {
+  SEND
+  RECEIVE
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+// ─── Models ───────────────────────────────────────────────
+
+model User {
+  id             String     @id @default(cuid())
+  phone          String     @unique
+  name           String
+  passwordHash   String?
+  faceDescriptor Float[]    // Vector de 128 floats (face-api.js)
+  authMethod     AuthMethod @default(PASSWORD)
+  isActive       Boolean    @default(true)
+
+  account        Account?
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([phone])
+  @@map("users")
+}
+
+model Account {
+  id            String   @id @default(cuid())
+  accountNumber String   @unique
+  balance       Decimal  @default(0) @db.Decimal(18, 2)
+  currency      String   @default("COP")
+  isActive      Boolean  @default(true)
+
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sentTransactions     Transaction[] @relation("FromAccount")
+  receivedTransactions Transaction[] @relation("ToAccount")
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+  @@index([accountNumber])
+  @@map("accounts")
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  amount      Decimal           @db.Decimal(18, 2)
+  type        TransactionType
+  status      TransactionStatus @default(PENDING)
+  description String?
+  reference   String            @unique
+
+  fromAccountId String?
+  fromAccount   Account?  @relation("FromAccount", fields: [fromAccountId], references: [id])
+
+  toAccountId   String?
+  toAccount     Account?  @relation("ToAccount", fields: [toAccountId], references: [id])
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([fromAccountId, createdAt(sort: Desc)])
+  @@index([toAccountId,   createdAt(sort: Desc)])
+  @@index([reference])
+  @@index([status])
+  @@map("transactions")
+}
