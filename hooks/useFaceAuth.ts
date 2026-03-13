@@ -75,9 +75,9 @@ export function useFaceAuth(): UseFaceAuthReturn {
       }
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'NotAllowedError') {
-        setError('Permiso de cámara denegado. Habilítalo en tu navegador.');
+        setError('Camera permission denied. Enable it in your browser.');
       } else {
-        setError('No se pudo acceder a la cámara.');
+        setError('Could not access camera.');
       }
       setState('error');
     }
@@ -143,7 +143,7 @@ export function useFaceAuth(): UseFaceAuthReturn {
       stopCamera();
       return desc;
     } catch {
-      setError('Error al capturar el rostro. Intenta de nuevo.');
+      setError('Error capturing face. Try again.');
       setState('error');
       return null;
     }

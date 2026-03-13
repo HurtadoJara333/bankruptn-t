@@ -12,11 +12,11 @@ export function error(message: string, status = 400) {
   return NextResponse.json({ success: false, error: message }, { status });
 }
 
-export function unauthorized(message = 'No autorizado') {
+export function unauthorized(message = 'Unauthorized') {
   return error(message, 401);
 }
 
-export function notFound(message = 'No encontrado') {
+export function notFound(message = 'Not found') {
   return error(message, 404);
 }
 
@@ -34,16 +34,16 @@ export function withErrorHandler<Req extends Request = Request>(
     try {
       return await handler(req);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Error inesperado';
+      const message = err instanceof Error ? err.message : 'Unexpected error';
       console.error('[API Error]', message);
 
-      // Errores conocidos → 400, resto → 500
+      // Known errors → 400, rest → 500
       const isKnown = [
-        'No autorizado',
-        'Saldo insuficiente',
-        'Usuario no encontrado',
-        'ya está registrado',
-        'Credenciales inválidas',
+        'Unauthorized',
+        'Insufficient balance',
+        'User not found',
+        'is already registered',
+        'Invalid credentials',
       ].some((m) => message.includes(m));
 
       return isKnown ? error(message, 400) : serverError(message);

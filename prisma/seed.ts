@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Usuario demo
+  // Demo user
   const passwordHash = await bcrypt.hash('demo123', 12);
 
   const user1 = await prisma.user.upsert({
@@ -47,7 +47,7 @@ async function main() {
     include: { account: true },
   });
 
-  // Transacciones de ejemplo
+  // Example transactions
   if (user1.account && user2.account) {
     await prisma.transaction.createMany({
       skipDuplicates: true,
@@ -56,7 +56,7 @@ async function main() {
           amount:        150_000,
           type:          'SEND',
           status:        'COMPLETED',
-          description:   'Pago cuota',
+          description:   'Fee payment',
           reference:     'TXN-DEMO0001',
           fromAccountId: user1.account.id,
           toAccountId:   user2.account.id,
@@ -65,7 +65,7 @@ async function main() {
           amount:        500_000,
           type:          'DEPOSIT',
           status:        'COMPLETED',
-          description:   'Recarga inicial',
+          description:   'Initial recharge',
           reference:     'TXN-DEMO0002',
           toAccountId:   user1.account.id,
         },
@@ -82,7 +82,7 @@ async function main() {
     });
   }
 
-  console.log('✅ Seed completado');
+  console.log('✅ Seed completed');
   console.log('   📱 Login demo: +573001234567 / demo123');
 }
 

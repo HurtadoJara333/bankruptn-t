@@ -38,7 +38,7 @@ export default function DashboardPage() {
           onClick={refetch}
           className="text-mint-400 text-xs font-semibold border border-mint-400/20 px-4 py-2 rounded-lg hover:border-mint-400/50 transition-all"
         >
-          Reintentar
+          Retry
         </button>
       </div>
     );
@@ -53,14 +53,14 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">
-            Mi cuenta
+            My account
           </h1>
           <p className="text-white/35 text-sm mt-0.5">
-            Resumen de tu actividad financiera
+            Summary of your financial activity
           </p>
         </div>
         <p className="text-[11px] text-white/20 font-mono hidden sm:block">
-          {new Date().toLocaleDateString('es-CO', {
+          {new Date().toLocaleDateString('en-US', {
             weekday: 'long', day: 'numeric', month: 'long',
           })}
         </p>

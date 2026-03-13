@@ -22,8 +22,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "bankruptn't — Tu banco digital",
-  description: 'Gestiona tu dinero de forma simple, segura y moderna.',
+  title: "bankruptn't — Your digital bank",
+  description: 'Manage your money in a simple, secure and modern way.',
   icons: { icon: '/favicon.ico' },
 };
 
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="en" className="dark">
       <body
         className={`
           ${spaceGrotesk.variable}

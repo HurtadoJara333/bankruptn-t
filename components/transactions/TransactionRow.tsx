@@ -16,9 +16,9 @@ const STATUS_STYLES: Record<string, string> = {
   FAILED:    'bg-danger/8 text-danger border-danger/15',
 };
 const STATUS_LABELS: Record<string, string> = {
-  COMPLETED: '✓ Completado',
-  PENDING:   '⏳ Pendiente',
-  FAILED:    '✕ Fallido',
+  COMPLETED: '✓ Completed',
+  PENDING:   '⏳ Pending',
+  FAILED:    '✕ Failed',
 };
 
 function initials(name: string) {
@@ -33,7 +33,7 @@ export default function TransactionRow({ tx, currentAccountId, compact = false }
   const borderClass = isIncoming ? 'border-mint-400/15' : 'border-danger/12';
 
   const peer        = isIncoming ? tx.fromAccount?.user : tx.toAccount?.user;
-  const displayName = peer?.name ?? (tx.type === 'DEPOSIT' ? 'Depósito' : 'Transferencia');
+  const displayName = peer?.name ?? (tx.type === 'DEPOSIT' ? 'Deposit' : 'Transfer');
   const displaySub  = peer?.phone ?? tx.reference;
 
   return (

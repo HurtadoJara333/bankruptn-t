@@ -38,6 +38,6 @@ export function getTokenPayload(request: Request): JwtPayload | null {
  */
 export function requireAuth(request: Request): JwtPayload {
   const payload = getTokenPayload(request);
-  if (!payload) throw new Error('No autorizado');
+  if (!payload) throw new Error('Unauthorized');
   return payload;
 }

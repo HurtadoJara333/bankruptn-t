@@ -1,10 +1,10 @@
 /**
- * Formatea un número como moneda
+ * Formats a number as currency
  */
 export function formatCurrency(
   amount: number,
   currency = 'COP',
-  locale  = 'es-CO'
+  locale  = 'en-US'
 ): string {
   return new Intl.NumberFormat(locale, {
     style:                 'currency',
@@ -15,7 +15,7 @@ export function formatCurrency(
 }
 
 /**
- * Formatea número como balance corto (ej: 1.2M, 45K)
+ * Formats number as short balance (e.g: 1.2M, 45K)
  */
 export function formatBalanceShort(amount: number): string {
   if (amount >= 1_000_000_000) return `${(amount / 1_000_000_000).toFixed(1)}B`;
@@ -25,7 +25,7 @@ export function formatBalanceShort(amount: number): string {
 }
 
 /**
- * Formatea fecha relativa (hace X minutos, ayer, etc.)
+ * Formats relative date (X minutes ago, yesterday, etc.)
  */
 export function formatRelativeDate(dateStr: string): string {
   const date = new Date(dateStr);
@@ -36,13 +36,13 @@ export function formatRelativeDate(dateStr: string): string {
   const hours   = Math.floor(diff / 3_600_000);
   const days    = Math.floor(diff / 86_400_000);
 
-  if (minutes < 1)   return 'Ahora mismo';
-  if (minutes < 60)  return `Hace ${minutes} min`;
-  if (hours   < 24)  return `Hace ${hours}h`;
-  if (days    === 1) return 'Ayer';
-  if (days    < 7)   return `Hace ${days} días`;
+  if (minutes < 1)   return 'Just now';
+  if (minutes < 60)  return `${minutes} min ago`;
+  if (hours   < 24)  return `${hours}h ago`;
+  if (days    === 1) return 'Yesterday';
+  if (days    < 7)   return `${days} days ago`;
 
-  return date.toLocaleDateString('es-CO', {
+  return date.toLocaleDateString('en-US', {
     day:   'numeric',
     month: 'short',
     year:  days > 365 ? 'numeric' : undefined,
@@ -50,7 +50,7 @@ export function formatRelativeDate(dateStr: string): string {
 }
 
 /**
- * Formatea número de teléfono para mostrar
+ * Formats phone number for display
  */
 export function formatPhone(phone: string): string {
   const cleaned = phone.replace(/\D/g, '');
@@ -61,7 +61,7 @@ export function formatPhone(phone: string): string {
 }
 
 /**
- * Máscara de número de cuenta (ej: •••• •••• 4521)
+ * Account number mask (e.g: •••• •••• 4521)
  */
 export function maskAccountNumber(accountNumber: string): string {
   return `•••• •••• ${accountNumber.slice(-4)}`;

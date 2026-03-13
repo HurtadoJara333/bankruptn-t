@@ -10,8 +10,8 @@ import FaceCapture         from '@/components/auth/FaceCapture';
 import { cn }              from '@/lib/utils/cn';
 
 const schema = z.object({
-  phone:    z.string().min(7, 'Ingresa un número válido'),
-  password: z.string().min(1, 'Ingresa tu contraseña').optional(),
+  phone:    z.string().min(7, 'Enter a valid number'),
+  password: z.string().min(1, 'Enter your password').optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -35,7 +35,7 @@ export default function LoginPage() {
     try {
       await login({ phone: data.phone.replace(/\s/g, ''), password: data.password });
     } catch (err: unknown) {
-      setServerError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+      setServerError(err instanceof Error ? err.message : 'Error logging in');
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export default function LoginPage() {
     try {
       await login({ phone: phone?.replace(/\s/g, '') ?? '', faceDescriptor: descriptor });
     } catch (err: unknown) {
-      setServerError(err instanceof Error ? err.message : 'No se pudo verificar el rostro');
+      setServerError(err instanceof Error ? err.message : 'Could not verify face');
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export default function LoginPage() {
             bankrupt<span className="text-mint-400">n't</span>
           </span>
         </div>
-        <p className="text-white/35 text-sm">Ingresa a tu cuenta</p>
+        <p className="text-white/35 text-sm">Log in to your account</p>
       </div>
 
       {/* Card */}
@@ -74,8 +74,8 @@ export default function LoginPage() {
         style={{ background: 'rgba(19,19,43,.85)', backdropFilter: 'blur(24px)' }}>
 
         <div className="mb-6">
-          <h2 className="font-display font-bold text-xl text-white mb-1">Bienvenido de nuevo</h2>
-          <p className="text-white/35 text-sm">Accede con tu número de celular</p>
+          <h2 className="font-display font-bold text-xl text-white mb-1">Welcome back</h2>
+          <p className="text-white/35 text-sm">Access with your mobile number</p>
         </div>
 
         {/* Mode toggle */}
@@ -91,7 +91,7 @@ export default function LoginPage() {
               {m === 'password' ? (
                 <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg> Contraseña</>
+                </svg> Password</>
               ) : (
                 <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/>
@@ -104,7 +104,7 @@ export default function LoginPage() {
         {/* Phone field (always visible) */}
         <div className="mb-4">
           <label className="block text-[11px] font-semibold text-white/40 uppercase tracking-[.5px] mb-2">
-            Número de celular
+            Mobile number
           </label>
           <div className="relative">
             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25">
@@ -123,13 +123,13 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-[11px] font-semibold text-white/40 uppercase tracking-[.5px] mb-2">
-                Contraseña
+                Password
               </label>
               <div className="relative">
                 <input
                   {...register('password')}
                   type={showPass ? 'text' : 'password'}
-                  placeholder="Tu contraseña"
+                  placeholder="Your password"
                   className="input-field pr-12"
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)}
@@ -158,8 +158,8 @@ export default function LoginPage() {
               className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
               {loading ? (
                 <><span className="w-4 h-4 border-2 border-night-900/30 border-t-night-900 rounded-full"
-                  style={{ animation: 'spin .8s linear infinite' }} />Ingresando...</>
-              ) : 'Ingresar'}
+                  style={{ animation: 'spin .8s linear infinite' }} />Logging in...</>
+              ) : 'Log in'}
             </button>
           </div>
         )}
@@ -177,9 +177,9 @@ export default function LoginPage() {
         )}
 
         <p className="text-center mt-6 text-sm text-white/30">
-          ¿No tienes cuenta?{' '}
+          Don't have an account?{' '}
           <Link href="/register" className="text-mint-400 font-semibold hover:text-mint-300 transition-colors">
-            Regístrate gratis
+            Sign up for free
           </Link>
         </p>
       </div>

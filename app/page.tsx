@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 export default function RootPage() {
-  // Redirige al login por defecto
-  // El middleware manejará la redirección al dashboard si ya hay sesión
+  // Redirect to login by default
+  // The middleware will handle redirection to dashboard if there's a session
   redirect('/login');
 }

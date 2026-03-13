@@ -11,8 +11,8 @@ import { formatCurrency }   from '@/lib/utils/currency';
 import { cn }               from '@/lib/utils/cn';
 
 const schema = z.object({
-  toPhone:     z.string().min(7, 'Ingresa un número válido'),
-  amount:      z.number({ invalid_type_error: 'Ingresa un monto' }).positive('El monto debe ser mayor a 0'),
+  toPhone:     z.string().min(7, 'Enter a valid number'),
+  amount:      z.number({ invalid_type_error: 'Enter an amount' }).positive('The amount must be greater than 0'),
   description: z.string().max(200).optional(),
 });
 
@@ -70,9 +70,9 @@ export default function SendPage() {
         description: data.description,
       });
       await refetch();
-      setSuccess({ reference: tx.reference, amount: Number(tx.amount), toName: tx.toAccount?.user?.name ?? 'Destinatario' });
+      setSuccess({ reference: tx.reference, amount: Number(tx.amount), toName: tx.toAccount?.user?.name ?? 'Recipient' });
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error al enviar');
+      setError(err instanceof Error ? err.message : 'Error sending');
     } finally {
       setLoading(false);
     }
@@ -93,18 +93,18 @@ export default function SendPage() {
         </div>
 
         <div>
-          <h2 className="font-display font-extrabold text-2xl text-white mb-2">¡Transferencia exitosa!</h2>
+          <h2 className="font-display font-extrabold text-2xl text-white mb-2">Successful transfer!</h2>
           <p className="text-white/40 text-sm">
-            Enviaste <span className="text-white font-semibold">{formatCurrency(success.amount, currency)}</span> a{' '}
+            You sent <span className="text-white font-semibold">{formatCurrency(success.amount, currency)}</span> to{' '}
             <span className="text-white font-semibold">{success.toName}</span>
           </p>
         </div>
 
         <div className="w-full card p-5 space-y-3 text-left">
           {[
-            { label: 'Referencia', value: success.reference, mono: true, color: 'text-mint-400' },
-            { label: 'Monto',      value: formatCurrency(success.amount, currency), mono: true, color: 'text-white' },
-            { label: 'Estado',     value: '✓ Completado', mono: false, color: 'text-mint-400' },
+            { label: 'Reference', value: success.reference, mono: true, color: 'text-mint-400' },
+            { label: 'Amount',      value: formatCurrency(success.amount, currency), mono: true, color: 'text-white' },
+            { label: 'Status',     value: '✓ Completed', mono: false, color: 'text-mint-400' },
           ].map(item => (
             <div key={item.label} className="flex justify-between text-sm">
               <span className="text-white/35">{item.label}</span>
@@ -115,10 +115,10 @@ export default function SendPage() {
 
         <div className="flex gap-3 w-full">
           <button onClick={() => { setSuccess(null); setAmountRaw(''); }} className="btn-ghost flex-1">
-            Nueva transferencia
+            New transfer
           </button>
           <button onClick={() => router.push('/dashboard')} className="btn-primary flex-1">
-            Ir al inicio
+            Go home
           </button>
         </div>
 
@@ -130,8 +130,8 @@ export default function SendPage() {
   return (
     <div className="max-w-lg mx-auto space-y-6 animate-slide-up">
       <div>
-        <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Enviar dinero</h1>
-        <p className="text-white/35 text-sm mt-0.5">Transfiere al instante por número de celular</p>
+        <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Send money</h1>
+        <p className="text-white/35 text-sm mt-0.5">Transfer instantly by mobile number</p>
       </div>
 
       <div className="card p-6 space-y-5">
@@ -139,7 +139,7 @@ export default function SendPage() {
         {/* Phone */}
         <div>
           <label className="block text-[11px] font-bold text-white/40 uppercase tracking-[.5px] mb-2">
-            Número del destinatario
+            Recipient's number
           </label>
           <div className="relative">
             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25">
@@ -171,7 +171,7 @@ export default function SendPage() {
               </div>
               <div>
                 <p className="text-mint-400 text-xs font-semibold">{foundUser.name}</p>
-                <p className="text-mint-400/50 text-[10px]">Usuario encontrado</p>
+                <p className="text-mint-400/50 text-[10px]">User found</p>
               </div>
             </div>
           )}
@@ -179,7 +179,7 @@ export default function SendPage() {
 
         {/* Amount */}
         <div>
-          <label className="block text-[11px] font-bold text-white/40 uppercase tracking-[.5px] mb-2">Monto</label>
+          <label className="block text-[11px] font-bold text-white/40 uppercase tracking-[.5px] mb-2">Amount</label>
           <div className="relative">
             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 font-mono font-bold text-lg">$</span>
             <input
@@ -215,14 +215,14 @@ export default function SendPage() {
         {/* Description */}
         <div>
           <label className="block text-[11px] font-bold text-white/40 uppercase tracking-[.5px] mb-2">
-            Descripción <span className="normal-case text-white/20">(opcional)</span>
+            Description <span className="normal-case text-white/20">(optional)</span>
           </label>
-          <input {...register('description')} placeholder="Pago cuota, regalo..." className="input-field" />
+          <input {...register('description')} placeholder="Fee payment, gift..." className="input-field" />
         </div>
 
         {/* Balance info */}
         <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-night-950/60 border border-border">
-          <span className="text-xs text-white/35">Saldo disponible</span>
+          <span className="text-xs text-white/35">Available balance</span>
           <span className="font-mono font-bold text-sm text-mint-400">{formatCurrency(balance, currency)}</span>
         </div>
 
@@ -240,11 +240,11 @@ export default function SendPage() {
           className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
           {loading ? (
             <><span className="w-4 h-4 border-2 border-night-900/30 border-t-night-900 rounded-full"
-              style={{ animation: 'spin .8s linear infinite' }} />Procesando...</>
+              style={{ animation: 'spin .8s linear infinite' }} />Processing...</>
           ) : (
             <><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>Enviar transferencia</>
+            </svg>Send transfer</>
           )}
         </button>
       </div>

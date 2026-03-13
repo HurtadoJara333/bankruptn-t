@@ -15,11 +15,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     select: { id: true, name: true, phone: true },
   });
 
-  if (!user) return notFound('Usuario no encontrado');
+  if (!user) return notFound('User not found');
 
   // No devolver el propio usuario
   if (user.id === payload.userId) {
-    return notFound('No puedes enviarte dinero a ti mismo');
+    return notFound('You cannot send money to yourself');
   }
 
   return ok(user);

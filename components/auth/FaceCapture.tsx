@@ -12,13 +12,13 @@ interface FaceCaptureProps {
 }
 
 const STATE_LABELS: Record<FaceAuthState, string> = {
-  'idle':           'Activar cámara',
-  'loading-models': 'Cargando modelos...',
-  'ready':          'Listo',
-  'scanning':       'Buscando rostro...',
-  'detected':       '¡Rostro detectado! Capturar',
-  'capturing':      'Capturando...',
-  'success':        '¡Captura exitosa!',
+  'idle':           'Activate camera',
+  'loading-models': 'Loading models...',
+  'ready':          'Ready',
+  'scanning':       'Looking for face...',
+  'detected':       'Face detected! Capture',
+  'capturing':      'Capturing...',
+  'success':        'Capture successful!',
   'error':          'Error',
 };
 
@@ -127,12 +127,12 @@ export default function FaceCapture({
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 </div>
-                <p className="text-mint-400 text-sm font-semibold">Rostro registrado</p>
+                <p className="text-mint-400 text-sm font-semibold">Face registered</p>
                 <button
                   onClick={reset}
                   className="text-white/30 text-xs hover:text-white/60 transition-colors underline"
                 >
-                  Volver a capturar
+                  Capture again
                 </button>
               </>
             ) : (
@@ -145,12 +145,12 @@ export default function FaceCapture({
                 </div>
                 <div className="text-center">
                   <p className="text-white/40 text-sm">
-                    {isLoading ? 'Cargando...' : 'Toca para activar la cámara'}
+                    {isLoading ? 'Loading...' : 'Tap to activate camera'}
                   </p>
                   <p className="text-white/20 text-xs mt-1">
                     {mode === 'register'
-                      ? 'Tu rostro se guardará de forma segura'
-                      : 'Usaremos tu rostro para verificar tu identidad'}
+                      ? 'Your face will be stored securely'
+                      : 'We will use your face to verify your identity'}
                   </p>
                 </div>
                 {isLoading && (

@@ -37,14 +37,14 @@ export default function BalanceCard({
       {/* Top row */}
       <div className="flex items-start justify-between mb-5">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-bold text-white/35 uppercase tracking-[.6px]">Saldo disponible</span>
+          <span className="text-[11px] font-bold text-white/35 uppercase tracking-[.6px]">Available balance</span>
           <span className="text-[10px] bg-mint-400/10 border border-mint-400/20 text-mint-400 font-bold px-2 py-0.5 rounded-md">
             {currency}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-mint-400" style={{ animation: 'pulse 2s infinite' }} />
-          <span className="text-[11px] text-mint-400 font-semibold">Activa</span>
+          <span className="text-[11px] text-mint-400 font-semibold">Active</span>
         </div>
       </div>
 
@@ -77,9 +77,9 @@ export default function BalanceCard({
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-3 pt-5 border-t border-white/[0.06]">
         {[
-          { label: 'Total enviado',   value: formatCurrency(totalSent, currency),   color: 'text-danger' },
-          { label: 'Total recibido',  value: formatCurrency(totalReceived, currency), color: 'text-mint-400' },
-          { label: 'Transacciones',   value: transactionCount.toString(),            color: 'text-white/60' },
+          { label: 'Total sent',      value: formatCurrency(totalSent, currency),   color: 'text-danger' },
+          { label: 'Total received',  value: formatCurrency(totalReceived, currency), color: 'text-mint-400' },
+          { label: 'Transactions',    value: transactionCount.toString(),            color: 'text-white/60' },
         ].map((s) => (
           <div key={s.label}>
             <p className="text-[10px] text-white/30 font-semibold uppercase tracking-[.4px] mb-1">{s.label}</p>

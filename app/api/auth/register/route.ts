@@ -24,22 +24,22 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
 
   const { phone, name, password, faceDescriptor, authMethod } = parsed.data;
 
-  // Validar según método
+  // Validate according to method
   if ((authMethod === 'PASSWORD' || authMethod === 'BOTH') && !password) {
-    return error('Se requiere contraseña para este método');
+    return error('Password is required for this method');
   }
   if ((authMethod === 'FACE' || authMethod === 'BOTH') && !faceDescriptor) {
-    return error('Se requiere el descriptor facial para este método');
+    return error('Face descriptor is required for this method');
   }
 
-  // Verificar teléfono único
+  // Check unique phone
   const existing = await prisma.user.findUnique({ where: { phone } });
-  if (existing) return error('El número de celular ya está registrado');
+  if (existing) return error('The mobile number is already registered');
 
-  // Hash de contraseña
+  // Password hash
   const passwordHash = password ? await bcrypt.hash(password, 12) : undefined;
 
-  // Crear usuario + cuenta en una transacción atómica
+  // Create user + account in an atomic transaction
   const accountNumber = await generateAccountNumber();
 
   const user = await prisma.user.create({

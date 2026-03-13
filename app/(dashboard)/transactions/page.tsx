@@ -9,11 +9,11 @@ import { cn }               from '@/lib/utils/cn';
 type FilterType = 'all' | 'SEND' | 'RECEIVE' | 'DEPOSIT' | 'pending';
 
 const FILTERS: { id: FilterType; label: string }[] = [
-  { id: 'all',     label: 'Todos'      },
-  { id: 'RECEIVE', label: 'Recibidos'  },
-  { id: 'SEND',    label: 'Enviados'   },
-  { id: 'DEPOSIT', label: 'Depósitos'  },
-  { id: 'pending', label: 'Pendientes' },
+  { id: 'all',     label: 'All'      },
+  { id: 'RECEIVE', label: 'Received' },
+  { id: 'SEND',    label: 'Sent'     },
+  { id: 'DEPOSIT', label: 'Deposits' },
+  { id: 'pending', label: 'Pending'  },
 ];
 
 function Skeleton({ className = '' }: { className?: string }) {
@@ -44,13 +44,13 @@ export default function TransactionsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Movimientos</h1>
-          <p className="text-white/35 text-sm mt-0.5">Historial completo de transacciones</p>
+          <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Transactions</h1>
+          <p className="text-white/35 text-sm mt-0.5">Complete transaction history</p>
         </div>
         {paginated && (
           <div className="bg-mint-400/8 border border-mint-400/15 rounded-xl px-4 py-2 self-start">
             <span className="text-mint-400 text-sm font-bold font-mono">{paginated.total}</span>
-            <span className="text-mint-400/60 text-xs ml-1">transacciones</span>
+            <span className="text-mint-400/60 text-xs ml-1">transactions</span>
           </div>
         )}
       </div>
@@ -78,7 +78,7 @@ export default function TransactionsPage() {
 
         {/* Desktop column headers */}
         <div className="hidden sm:grid grid-cols-[1fr_150px_130px_100px] px-5 py-3 border-b border-border bg-white/[0.02]">
-          {['Descripción', 'Monto', 'Estado', 'Fecha'].map((h) => (
+          {['Description', 'Amount', 'Status', 'Date'].map((h) => (
             <span key={h} className="text-[10px] font-bold text-white/30 uppercase tracking-[.6px]">{h}</span>
           ))}
         </div>
@@ -94,7 +94,7 @@ export default function TransactionsPage() {
         {!loading && paginated?.transactions.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
             <div className="w-12 h-12 rounded-2xl bg-white/5 border border-border flex items-center justify-center text-xl">📭</div>
-            <p className="text-white/30 text-sm">Sin movimientos en este filtro</p>
+            <p className="text-white/30 text-sm">No transactions in this filter</p>
           </div>
         )}
 
@@ -107,16 +107,16 @@ export default function TransactionsPage() {
                 const sign       = isIncoming ? '+' : '-';
                 const color      = isIncoming ? 'text-mint-400' : 'text-danger';
                 const peer       = isIncoming ? tx.fromAccount?.user : tx.toAccount?.user;
-                const name       = peer?.name ?? (tx.type === 'DEPOSIT' ? 'Depósito' : 'Transferencia');
+                const name       = peer?.name ?? (tx.type === 'DEPOSIT' ? 'Deposit' : 'Transfer');
                 const STATUS_STYLES: Record<string, string> = {
                   COMPLETED: 'bg-mint-400/8 border-mint-400/15 text-mint-400',
                   PENDING:   'bg-warning/8 border-warning/15 text-warning',
                   FAILED:    'bg-danger/8 border-danger/15 text-danger',
                 };
                 const STATUS_LABELS: Record<string, string> = {
-                  COMPLETED: '✓ Completado',
-                  PENDING:   '⏳ Pendiente',
-                  FAILED:    '✕ Fallido',
+                  COMPLETED: '✓ Completed',
+                  PENDING:   '⏳ Pending',
+                  FAILED:    '✕ Failed',
                 };
                 return (
                   <div
@@ -148,7 +148,7 @@ export default function TransactionsPage() {
                     </div>
                     {/* Date */}
                     <p className="text-xs text-white/25">
-                      {new Date(tx.createdAt).toLocaleDateString('es-CO', { day:'numeric', month:'short' })}
+                      {new Date(tx.createdAt).toLocaleDateString('en-US', { day:'numeric', month:'short' })}
                     </p>
                   </div>
                 );
@@ -168,7 +168,7 @@ export default function TransactionsPage() {
         {paginated && paginated.totalPages > 1 && (
           <div className="flex items-center justify-between px-5 py-4 border-t border-border bg-white/[0.02]">
             <span className="text-xs text-white/30">
-              Página {paginated.page} de {paginated.totalPages}
+              Page {paginated.page} of {paginated.totalPages}
             </span>
             <div className="flex gap-2">
               <button
@@ -176,14 +176,14 @@ export default function TransactionsPage() {
                 disabled={page === 1}
                 className="px-3 py-1.5 rounded-lg border border-border text-xs text-white/40 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
-                ← Anterior
+                ← Previous
               </button>
               <button
                 onClick={() => setPage(p => Math.min(paginated.totalPages, p + 1))}
                 disabled={page === paginated.totalPages}
                 className="px-3 py-1.5 rounded-lg border border-border text-xs text-white/40 hover:text-white hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               >
-                Siguiente →
+                Next →
               </button>
             </div>
           </div>

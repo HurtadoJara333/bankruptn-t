@@ -28,26 +28,26 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     include: { user: { select: { id: true, phone: true } } },
   });
 
-  if (!fromAccount)         return error('Tu cuenta no fue encontrada');
-  if (!fromAccount.isActive) return error('Tu cuenta está inactiva');
+  if (!fromAccount)         return error('Your account was not found');
+  if (!fromAccount.isActive) return error('Your account is inactive');
 
-  // Verificar que no se envíe a sí mismo
+  // Check that not sending to self
   if (fromAccount.user.phone === toPhone) {
-    return error('No puedes enviarte dinero a ti mismo');
+    return error('You cannot send money to yourself');
   }
 
-  // Obtener cuenta destino
+  // Get destination account
   const toUser = await prisma.user.findUnique({
     where:   { phone: toPhone, isActive: true },
     include: { account: true },
   });
 
-  if (!toUser)          return error('El destinatario no existe');
-  if (!toUser.account)  return error('El destinatario no tiene cuenta activa');
+  if (!toUser)          return error('Recipient does not exist');
+  if (!toUser.account)  return error('Recipient does not have an active account');
 
-  // Verificar saldo suficiente
+  // Check sufficient balance
   if (new Decimal(fromAccount.balance).lessThan(amount)) {
-    return error('Saldo insuficiente');
+    return error('Insufficient balance');
   }
 
   const reference = await generateReference();

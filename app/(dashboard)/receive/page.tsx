@@ -37,16 +37,16 @@ export default function ReceivePage() {
       const res   = await fetch('/api/account/deposit', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body:    JSON.stringify({ amount, description: 'Recarga de saldo' }),
+        body:    JSON.stringify({ amount, description: 'Balance recharge' }),
       });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.error);
       await refetch();
-      setDepositMsg(`✓ Recargaste ${formatCurrency(amount, currency)} exitosamente`);
+      setDepositMsg(`✓ You recharged ${formatCurrency(amount, currency)} successfully`);
       setDepositAmt('');
       setTimeout(() => setDepositMsg(null), 4000);
     } catch (err: unknown) {
-      setDepositMsg(err instanceof Error ? err.message : 'Error al procesar la recarga');
+      setDepositMsg(err instanceof Error ? err.message : 'Error processing the recharge');
     } finally {
       setDepositing(false);
     }
@@ -54,7 +54,7 @@ export default function ReceivePage() {
 
   const copyItems = [
     {
-      label: 'Número de celular',
+      label: 'Mobile number',
       value: phone,
       type:  'phone' as const,
       icon: (
@@ -65,7 +65,7 @@ export default function ReceivePage() {
       ),
     },
     {
-      label: 'Número de cuenta',
+      label: 'Account number',
       value: account?.accountNumber ?? '----------',
       type:  'account' as const,
       icon: (
@@ -81,15 +81,15 @@ export default function ReceivePage() {
     <div className="max-w-lg mx-auto space-y-6 animate-slide-up">
 
       <div>
-        <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Recibir dinero</h1>
-        <p className="text-white/35 text-sm mt-0.5">Comparte tu información para recibir transferencias</p>
+        <h1 className="font-display font-extrabold text-2xl text-white tracking-tight">Receive money</h1>
+        <p className="text-white/35 text-sm mt-0.5">Share your information to receive transfers</p>
       </div>
 
       {/* QR card */}
       <div className="card p-6 flex flex-col items-center gap-5">
         <div className="text-center">
-          <p className="text-sm font-semibold text-white/60 mb-1">Código QR de tu cuenta</p>
-          <p className="text-xs text-white/25">Muéstralo para que te transfieran</p>
+          <p className="text-sm font-semibold text-white/60 mb-1">Your account QR code</p>
+          <p className="text-xs text-white/25">Show it so they can transfer to you</p>
         </div>
 
         <div className="p-4 bg-white rounded-2xl" style={{ boxShadow: '0 0 30px rgba(61,245,176,.2)' }}>
@@ -110,7 +110,7 @@ export default function ReceivePage() {
       {/* Share data */}
       <div className="card overflow-hidden">
         <div className="px-5 py-3 border-b border-border bg-white/[0.02]">
-          <p className="text-xs font-bold text-white/30 uppercase tracking-[.6px]">Datos para transferir</p>
+          <p className="text-xs font-bold text-white/30 uppercase tracking-[.6px]">Data to transfer</p>
         </div>
         {copyItems.map((item) => (
           <div key={item.type} className="flex items-center gap-4 px-5 py-4 border-b border-border/60 last:border-none">
@@ -131,9 +131,9 @@ export default function ReceivePage() {
               )}
             >
               {copied === item.type ? (
-                <><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg> Copiado</>
+                <><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg> Copied</>
               ) : (
-                <><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</>
+                <><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</>
               )}
             </button>
           </div>
@@ -143,12 +143,12 @@ export default function ReceivePage() {
       {/* Deposit */}
       <div className="card p-5 space-y-4">
         <div>
-          <h3 className="font-display font-bold text-white text-base">Recargar saldo</h3>
-          <p className="text-white/30 text-xs mt-0.5">Agrega fondos a tu cuenta</p>
+          <h3 className="font-display font-bold text-white text-base">Recharge balance</h3>
+          <p className="text-white/30 text-xs mt-0.5">Add funds to your account</p>
         </div>
 
         <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-night-950/60 border border-border">
-          <span className="text-xs text-white/35">Saldo actual</span>
+          <span className="text-xs text-white/35">Current balance</span>
           <span className="font-mono font-bold text-sm text-mint-400">{formatCurrency(balance, currency)}</span>
         </div>
 
@@ -157,7 +157,7 @@ export default function ReceivePage() {
           <input
             value={depositAmt ? Number(depositAmt).toLocaleString('es-CO') : ''}
             onChange={(e) => setDepositAmt(e.target.value.replace(/[^0-9]/g, ''))}
-            placeholder="Monto a recargar"
+            placeholder="Amount to recharge"
             className="input-field pl-8 font-mono"
           />
         </div>
@@ -177,12 +177,12 @@ export default function ReceivePage() {
           className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
           {depositing ? (
             <><span className="w-4 h-4 border-2 border-night-900/30 border-t-night-900 rounded-full"
-              style={{ animation: 'spin .8s linear infinite' }} />Procesando...</>
+              style={{ animation: 'spin .8s linear infinite' }} />Processing...</>
           ) : (
             <><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>Confirmar recarga</>
+            </svg>Confirm recharge</>
           )}
         </button>
       </div>

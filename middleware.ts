@@ -7,13 +7,13 @@ const PROTECTED_ROOT = '/dashboard';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Obtener token de cookie (lo setearemos al hacer login)
+  // Get token from cookie (we will set it when logging in)
   const token = request.cookies.get('bankruptnt_token')?.value;
 
   const isPublicRoute    = PUBLIC_ROUTES.some((r) => pathname.startsWith(r));
   const isProtectedRoute = !isPublicRoute && !pathname.startsWith('/api') && pathname !== '/';
 
-  // Si no hay token y trata de acceder a ruta protegida → login
+  // If no token and tries to access protected route → login
   if (!token && isProtectedRoute) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Si hay token y va a login/register → dashboard
+  // If has token and goes to login/register → dashboard
   if (token && isPublicRoute) {
     const url = request.nextUrl.clone();
     url.pathname = PROTECTED_ROOT;

@@ -1,7 +1,7 @@
 import prisma from './client';
 
 /**
- * Genera un número de cuenta único de 10 dígitos
+ * Generates a unique 10-digit account number
  */
 export async function generateAccountNumber(): Promise<string> {
   let accountNumber: string;
@@ -18,7 +18,7 @@ export async function generateAccountNumber(): Promise<string> {
 }
 
 /**
- * Genera una referencia única tipo TXN-XXXXXXXX
+ * Generates a unique reference of type TXN-XXXXXXXX
  */
 export async function generateReference(): Promise<string> {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

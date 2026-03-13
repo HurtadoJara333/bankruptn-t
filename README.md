@@ -1,14 +1,14 @@
 # bankruptn't 💚
 
-> Tu banco digital — simple, seguro y moderno.
+> Your digital bank — simple, secure and modern.
 
 ## Stack
 
 | Capa | Tecnología |
 |------|------------|
 | Framework | Next.js 14 (App Router) + TypeScript |
-| Estilos | Tailwind CSS |
-| Base de datos | PostgreSQL (Neon) |
+| Styling | Tailwind CSS |
+| Database | PostgreSQL (Neon) |
 | ORM | Prisma |
 | API | REST (Next.js API Routes) |
 | Auth | JWT + bcrypt + face-api.js |
@@ -26,27 +26,27 @@
 npm install
 ```
 
-### 2. Crear proyecto en Neon
-1. Ve a [console.neon.tech](https://console.neon.tech)
-2. Crea un nuevo proyecto → nombre: `bankruptnt`
-3. Copia la **Connection string** (pooled) y la **Direct URL**
+### 2. Create project in Neon
+1. Go to [console.neon.tech](https://console.neon.tech)
+2. Create a new project → name: `bankruptnt`
+3. Copy the **Connection string** (pooled) and the **Direct URL**
 
-### 3. Configurar variables de entorno
+### 3. Configure environment variables
 ```bash
 cp .env.local.example .env.local
-# Edita .env.local con tus valores de Neon
+# Edit .env.local with your Neon values
 ```
 
-### 4. Crear tablas en la base de datos
+### 4. Create tables in the database
 ```bash
-npm run db:push        # Crea las tablas desde el schema Prisma
-npm run db:seed        # Carga datos de prueba (opcional)
+npm run db:push        # Create tables from Prisma schema
+npm run db:seed        # Load test data (optional)
 ```
 
-### 5. Descargar modelos face-api.js
-Ve a: https://github.com/justadudewhohacks/face-api.js/tree/master/weights
+### 5. Download face-api.js models
+Go to: https://github.com/justadudewhohacks/face-api.js/tree/master/weights
 
-Descarga estos archivos a `/public/models/`:
+Download these files to `/public/models/`:
 - `tiny_face_detector_model-weights_manifest.json` + shard
 - `face_landmark_68_model-weights_manifest.json` + shard
 - `face_recognition_model-weights_manifest.json` + shard
@@ -61,18 +61,18 @@ npm run dev
 
 ## API Routes
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| POST | `/api/auth/register` | Registro de usuario |
-| POST | `/api/auth/login` | Login (password o facial) |
-| GET | `/api/account` | Balance + stats + recientes |
-| GET | `/api/transactions` | Historial paginado + filtros |
-| POST | `/api/transactions/send` | Enviar dinero |
-| GET | `/api/user/find?phone=` | Buscar usuario por teléfono |
+| Method | Route | Description |
+|--------|-------|-------------|
+| POST | `/api/auth/register` | User registration |
+| POST | `/api/auth/login` | Login (password or facial) |
+| GET | `/api/account` | Balance + stats + recent |
+| GET | `/api/transactions` | Paginated history + filters |
+| POST | `/api/transactions/send` | Send money |
+| GET | `/api/user/find?phone=` | Find user by phone |
 
 ---
 
-## Credenciales demo (después del seed)
+## Demo credentials (after seed)
 ```
 Teléfono: +573001234567
 Contraseña: demo123
@@ -82,8 +82,8 @@ Contraseña: demo123
 
 ## Comandos Prisma útiles
 ```bash
-npm run db:generate   # Regenerar Prisma Client
-npm run db:push       # Sincronizar schema → DB (sin migración)
-npm run db:migrate    # Crear migración formal
-npm run db:studio     # Abrir Prisma Studio (UI para la DB)
+npm run db:generate   # Regenerate Prisma Client
+npm run db:push       # Sync schema → DB (without migration)
+npm run db:migrate    # Create formal migration
+npm run db:studio     # Open Prisma Studio (DB UI)
 ```

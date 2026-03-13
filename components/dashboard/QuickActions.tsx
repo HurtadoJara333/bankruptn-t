@@ -5,8 +5,8 @@ import Link from 'next/link';
 const ACTIONS = [
   {
     href:    '/send',
-    label:   'Enviar dinero',
-    sub:     'Transfiere al instante',
+    label:   'Send money',
+    sub:     'Transfer instantly',
     emoji:   '↗',
     color:   'from-mint-500/15 to-mint-400/5',
     border:  'border-mint-500/20 hover:border-mint-500/50',
@@ -15,8 +15,8 @@ const ACTIONS = [
   },
   {
     href:    '/receive',
-    label:   'Recibir dinero',
-    sub:     'Comparte tu número o QR',
+    label:   'Receive money',
+    sub:     'Share your number or QR',
     emoji:   '↙',
     color:   'from-night-800/60 to-night-900/40',
     border:  'border-border hover:border-mint-500/30',

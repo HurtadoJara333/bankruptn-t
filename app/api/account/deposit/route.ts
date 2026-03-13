@@ -34,7 +34,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
         amount,
         type:        'DEPOSIT',
         status:      'COMPLETED',
-        description: description ?? 'Recarga de saldo',
+        description: description ?? 'Balance recharge',
         reference,
         toAccountId: account.id,
       },

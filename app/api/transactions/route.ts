@@ -20,7 +20,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     select: { id: true },
   });
 
-  if (!account) return unauthorized('Cuenta no encontrada');
+  if (!account) return unauthorized('Account not found');
 
   // Build dynamic filter
   const baseWhere: Prisma.TransactionWhereInput = {

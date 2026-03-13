@@ -32,7 +32,7 @@ export function useTransactions(params: UseTransactionsParams = {}): UseTransact
       const result = await transactionsApi.list(JSON.parse(paramKey));
       setData(result);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error al cargar transacciones');
+      setError(err instanceof Error ? err.message : 'Error loading transactions');
     } finally {
       setLoading(false);
     }
