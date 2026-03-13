@@ -54,7 +54,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto mt-10">
 
       {/* Logo */}
       <div className="text-center mb-8 animate-slide-up">
