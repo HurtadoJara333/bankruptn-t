@@ -8,7 +8,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   try { payload = requireAuth(req); } catch { return unauthorized(); }
 
   const phone = new URL(req.url).searchParams.get('phone');
-  if (!phone) return notFound('Teléfono requerido');
+  if (!phone) return notFound('Phone required');
 
   const user = await prisma.user.findUnique({
     where:  { phone, isActive: true },
@@ -17,7 +17,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
 
   if (!user) return notFound('User not found');
 
-  // No devolver el propio usuario
+  // Do not return the own user
   if (user.id === payload.userId) {
     return notFound('You cannot send money to yourself');
   }

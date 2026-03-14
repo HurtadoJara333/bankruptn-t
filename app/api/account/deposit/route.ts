@@ -16,7 +16,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
 
   const body   = await req.json();
   const parsed = schema.safeParse(body);
-  if (!parsed.success) return error('Datos inválidos');
+  if (!parsed.success) return error('Invalid data');
 
   const { amount, description } = parsed.data;
 
@@ -24,7 +24,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     where: { userId: payload.userId },
   });
 
-  if (!account) return error('Cuenta no encontrada');
+  if (!account) return error('Account not found');
 
   const reference = await generateReference();
 

@@ -1,6 +1,6 @@
 /**
  * Cliente HTTP para las API Routes de bankruptn't
- * Reemplaza Apollo Client — fetch simple con JWT automático
+ * Replaces Apollo Client — simple fetch with automatic JWT
  */
 
 const BASE = '/api';

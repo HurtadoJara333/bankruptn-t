@@ -1,8 +1,7 @@
-import { NextRequest }  from 'next/server';
-import prisma           from '@/lib/prisma/client';
-import { requireAuth }  from '@/lib/auth/jwt';
+import { NextRequest } from 'next/server';
+import prisma          from '@/lib/prisma/client';
+import { requireAuth } from '@/lib/auth/jwt';
 import { ok, unauthorized, withErrorHandler } from '@/lib/utils/api';
-import type { Prisma }  from '@prisma/client';
 
 export const GET = withErrorHandler(async (req: NextRequest) => {
   let payload;
@@ -11,8 +10,8 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const page   = Math.max(1, parseInt(searchParams.get('page')  ?? '1'));
   const limit  = Math.min(50, parseInt(searchParams.get('limit') ?? '20'));
-  const type   = searchParams.get('type');    // send | receive | deposit
-  const status = searchParams.get('status');  // PENDING | COMPLETED | FAILED
+  const type   = searchParams.get('type')?.toUpperCase();
+  const status = searchParams.get('status')?.toUpperCase();
   const skip   = (page - 1) * limit;
 
   const account = await prisma.account.findUnique({
@@ -20,34 +19,28 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     select: { id: true },
   });
 
-  if (!account) return unauthorized('Account not found');
+  if (!account) return unauthorized('Cuenta no encontrada');
 
-  // Build dynamic filter
-  const baseWhere: Prisma.TransactionWhereInput = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const where: any = {
     OR: [{ fromAccountId: account.id }, { toAccountId: account.id }],
+    ...(type   ? { type }   : {}),
+    ...(status ? { status } : {}),
   };
-
-  if (type)   baseWhere.type   = type.toUpperCase()   as Prisma.EnumTransactionTypeFilter;
-  if (status) baseWhere.status = status.toUpperCase() as Prisma.EnumTransactionStatusFilter;
 
   const [transactions, total] = await Promise.all([
     prisma.transaction.findMany({
-      where:   baseWhere,
+      where,
       orderBy: { createdAt: 'desc' },
       skip,
-      take:    limit,
+      take: limit,
       include: {
         fromAccount: { include: { user: { select: { id: true, name: true, phone: true } } } },
         toAccount:   { include: { user: { select: { id: true, name: true, phone: true } } } },
       },
     }),
-    prisma.transaction.count({ where: baseWhere }),
+    prisma.transaction.count({ where }),
   ]);
 
-  return ok({
-    transactions,
-    total,
-    page,
-    totalPages: Math.ceil(total / limit),
-  });
+  return ok({ transactions, total, page, totalPages: Math.ceil(total / limit) });
 });

@@ -27,7 +27,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
   const { phone, password, faceDescriptor } = parsed.data;
 
   if (!password && !faceDescriptor) {
-    return error('Debes proporcionar contraseña o descriptor facial');
+    return error('You must provide password or facial descriptor');
   }
 
   const user = await prisma.user.findUnique({
@@ -39,11 +39,11 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     },
   });
 
-  if (!user) return error('Credenciales inválidas', 401);
+  if (!user) return error('Invalid credentials', 401);
 
   let authenticated = false;
 
-  // Auth con contraseña
+  // Auth with password
   if (password && user.passwordHash) {
     authenticated = await bcrypt.compare(password, user.passwordHash);
   }
@@ -55,11 +55,11 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     authenticated   = distance <= threshold;
   }
 
-  if (!authenticated) return error('Credenciales inválidas', 401);
+  if (!authenticated) return error('Invalid credentials', 401);
 
   const token = signToken({ userId: user.id, phone: user.phone });
 
-  // No enviar datos sensibles
+  // Do not send sensitive data
   const { passwordHash: _, faceDescriptor: __, ...safeUser } = user;
 
   return ok({ token, user: safeUser });

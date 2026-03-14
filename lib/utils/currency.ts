@@ -68,7 +68,7 @@ export function maskAccountNumber(accountNumber: string): string {
 }
 
 /**
- * Obtiene color e ícono según tipo de transacción
+ * Gets color and icon according to transaction type
  */
 export function getTransactionMeta(type: string, isIncoming: boolean) {
   const isPositive = isIncoming || type === 'deposit' || type === 'receive';

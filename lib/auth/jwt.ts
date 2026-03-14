@@ -19,8 +19,8 @@ export function verifyToken(token: string): JwtPayload {
 }
 
 /**
- * Extrae y verifica el JWT del header Authorization.
- * Retorna el payload o null si es inválido.
+ * Extracts and verifies the JWT from the Authorization header.
+ * Returns the payload or null if invalid.
  */
 export function getTokenPayload(request: Request): JwtPayload | null {
   try {
@@ -34,7 +34,7 @@ export function getTokenPayload(request: Request): JwtPayload | null {
 }
 
 /**
- * Versión que lanza error si no hay token válido (para rutas protegidas)
+ * Version that throws error if no valid token (for protected routes)
  */
 export function requireAuth(request: Request): JwtPayload {
   const payload = getTokenPayload(request);

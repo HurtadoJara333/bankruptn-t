@@ -4,7 +4,7 @@
 
 ## Stack
 
-| Capa | Tecnología |
+| Layer | Technology |
 |------|------------|
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS |
@@ -13,15 +13,15 @@
 | API | REST (Next.js API Routes) |
 | Auth | JWT + bcrypt + face-api.js |
 
-## Colores
+## Colors
 - **Mint Neon** `#3DF5B0` — primario
 - **Night Blue** `#0F0F1A` — fondo
 
 ---
 
-## Setup paso a paso
+## Step-by-step setup
 
-### 1. Instalar dependencias
+### 1. Install dependencies
 ```bash
 npm install
 ```
@@ -51,7 +51,7 @@ Download these files to `/public/models/`:
 - `face_landmark_68_model-weights_manifest.json` + shard
 - `face_recognition_model-weights_manifest.json` + shard
 
-### 6. Correr en desarrollo
+### 6. Run in development
 ```bash
 npm run dev
 # → http://localhost:3000
@@ -74,13 +74,13 @@ npm run dev
 
 ## Demo credentials (after seed)
 ```
-Teléfono: +573001234567
-Contraseña: demo123
+Phone: +573001234567
+Password: demo123
 ```
 
 ---
 
-## Comandos Prisma útiles
+## Useful Prisma commands
 ```bash
 npm run db:generate   # Regenerate Prisma Client
 npm run db:push       # Sync schema → DB (without migration)

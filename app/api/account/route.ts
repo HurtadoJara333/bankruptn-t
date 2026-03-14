@@ -26,9 +26,9 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     },
   });
 
-  if (!account) return notFound('Cuenta no encontrada');
+  if (!account) return notFound('Account not found');
 
-  // Estadísticas agregadas
+  // Aggregated statistics
   const [sentAgg, receivedAgg, txCount] = await Promise.all([
     prisma.transaction.aggregate({
       where:   { fromAccountId: account.id, status: 'COMPLETED', type: 'SEND' },
@@ -45,7 +45,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     }),
   ]);
 
-  // Últimas 5 transacciones
+  // Last 5 transactions
   const recentTransactions = await prisma.transaction.findMany({
     where: {
       OR: [{ fromAccountId: account.id }, { toAccountId: account.id }],

@@ -18,7 +18,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
 
   const body   = await req.json();
   const parsed = schema.safeParse(body);
-  if (!parsed.success) return error(parsed.data?.[0]?.message ?? 'Datos inválidos');
+if (!parsed.success) return error(parsed.error.errors[0]?.message ?? 'invalid data');
 
   const { toPhone, amount, description } = parsed.data;
 

@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser]         = useState<ApiUser | null>(null);
   const [isLoading, setLoading] = useState(true);
 
-  // Restaurar sesión desde localStorage
+  // Restore session from localStorage
   useEffect(() => {
     const token    = localStorage.getItem(TOKEN_KEY);
     const userData = localStorage.getItem(USER_KEY);

@@ -133,7 +133,7 @@ export function useFaceAuth(): UseFaceAuthReturn {
       const desc = await getFaceDescriptor(videoRef.current);
 
       if (!desc) {
-        setError('No se detectó un rostro claro. Asegúrate de estar bien iluminado.');
+        setError('No clear face detected. Make sure you are well lit.');
         setState('detected');
         return null;
       }
