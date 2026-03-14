@@ -24,10 +24,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# face-api models (heavy, download separately)
-public/models/tiny_face_detector_model-shard*
-public/models/face_landmark_68_model-shard*
-public/models/face_recognition_model-shard*
-
 # TypeScript
 *.tsbuildinfo
